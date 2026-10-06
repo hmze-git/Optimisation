@@ -96,7 +96,7 @@ class TSPGA:
             tourDistances=self.tspProblem.computePopLen(population)
             self.numEvals+=self.config.popSize-self.config.elitism
 
-        if gen%self.logger.logWhen==0:
+    
 
-            self.logger.saveRecords('best.json')
+    
         return bestTour,bestTourLen,history

@@ -62,7 +62,7 @@ class Logger:
             'tourMean': float(distances.mean()), # what is the mean distance
             'tourWorst': float(distances.max()), #what is the worst distance seen
             'tourStd': float(distances.std()), #what is the deviation from the mean across the tours
-            'diversity': popSim,     
+            'similarity': popSim,     
             }
 
         self.rows.append(row)
@@ -73,8 +73,7 @@ class Logger:
                 print(f'Generation:{gen}| bestDist:{bestDistance} | diffrence%:{self.problem.differenceToBest(bestDistance)}| tourMean: {float(distances.mean())}|tourWorst: {float(distances.max())}|tourStd: {float(distances.std())}|Similarity: {popSim}')
 
 
-    def saveRecords(self,filename):
+    def getRows(self):
 
-         with open(filename, 'w') as file:
-            json.dump(self.rows, file, indent=4)
+         return self.rows
             

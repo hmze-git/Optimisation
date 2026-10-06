@@ -2,42 +2,41 @@ from TSPWorld import TspWorld
 from Baseline import nearestNeighbour,randomSerach,twoOpt
 from config import trailConfig,GAConfigs
 from Logger import Logger
-
+from RandomGen import RandomGen
 from GeneticAlgo import TSPGA
-tWorld=TspWorld(r'data\eil101.tsp',629)
+from plots import pltoSeeds
+import json
+import numpy as np
 
 
-nnarrayOrdr,nndist=nearestNeighbour(tWorld.distanceMatrix,5)
-randarrayOrder,randdistCount=randomSerach(tWorld.distanceMatrix)
+seeds=[27,37,47,57,67]
+gaConf=GAConfigs()
+trailConf=trailConfig()
+tWorld=TspWorld(trailConf.dataPath,trailConf.optimalSolution)
+def run():
 
-arrayOrder,dsit=twoOpt(tWorld.distanceMatrix)
+    results={'optimalSln':tWorld.optimal,'ga':{},'random':{}}
+    for seed in seeds:
 
-print('Two Opt')
-print(dsit)
-print('Random')
-print(randdistCount)
-print('NN')
-print(nndist)
+        logger=Logger(tWorld,gaConf,1000,'GA')
+        rng=np.random.default_rng(seed)
+        baseNN=nearestNeighbour(tWorld.distanceMatrix,5) #start from city 5
+        based2Opt=twoOpt(tWorld.distanceMatrix,rng)
 
+        geneticTSP=TSPGA(tWorld,gaConf,seed,logger)
 
-tWorld=TspWorld(r'data\eil101.tsp',629)
+        geneticTSP.run()
 
-#configs
-prob=trailConfig()
-
-ga=GAConfigs()
-
-logs=Logger(tWorld,ga,1000,'GA')
+        results['ga'][str(seed)]=logger.getRows() # reset logger each iteration so this doesnt hold stae info
 
 
-GA=TSPGA(tWorld,ga,17,logs)
+    with open('results.json','w') as f:
+        json.dump(results,f)
 
 
-logs.saveRecords('Records.json')
+run()
+with open('results.json') as file:
+    results = json.load(file)
 
-
-bestTours,bestTourLen,hist=GA.run()
-
-
-
-print(bestTourLen)
+pltoSeeds(results['ga'], 'best', 'GA: best so far', 'ga_best.png')
+#         ^^^^^^^^^^^^^ this is `runs`

@@ -29,35 +29,18 @@ def nearestNeighbour(distancematrix,startIndex):
     return np.array(touringRoute),distanceCount
 
 
-def randomSerach(distanceMatrix):
+def randomSerach(distanceMatrix,rng):
 
     numCities=len(distanceMatrix)
 
-    visited=np.zeros(numCities,dtype=bool)
-    currentCityIndex=random.randint(0,numCities-1)
-    visited[currentCityIndex]=True #visit first city
+    tour=rng.permutation(numCities)
     distanceCount=0
 
-    startIndex=currentCityIndex
-    touringRoute=[currentCityIndex] #start at the current city
     for x in range(numCities-1):
-        dMatCopy=distanceMatrix[currentCityIndex].copy()
-        dMatCopy[visited]=np.inf
-
-   
-        while True:
-            genRand=random.randint(0,numCities-1)
-            if visited[genRand]:
-                continue
-            else:
-                currentCityIndex=genRand
-                touringRoute.append(currentCityIndex)
-                distanceCount+=dMatCopy[currentCityIndex]
-                visited[currentCityIndex]=True
-                break
-     #dont forget the last city
-    distanceCount+=distanceMatrix[currentCityIndex][startIndex] 
-    return touringRoute,distanceCount
+        currentCity=tour[x]
+        nextCity=tour[(x+1)%numCities]
+        distanceCount+=distanceMatrix[currentCity][nextCity] 
+    return tour,distanceCount
 
 
 def computeDistance(tour,distanceMatrix):
@@ -80,11 +63,10 @@ def computeDistance(tour,distanceMatrix):
 
     return total
 
-def twoOpt(distanceMatrix):
+def twoOpt(distanceMatrix,rng):
     
     numCities=len(distanceMatrix)
-
-    tour=np.random.permutation(numCities)
+    tour=rng.permutation(numCities)
 
 
     improved=True

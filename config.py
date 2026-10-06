@@ -13,13 +13,13 @@ class trailConfig:
 class GAConfigs:
     popSize: int=200 #how many different arrangements to check each time
     generations:int=10000
-    tournamentSel: int=5 # take a groups of  5 tours select the best to be used for eveolution
+    tournamentSel: int=2 # take a groups of  5 tours select the best to be used for eveolution
     crossOverRate: float=0.5 #explore vs exploit partially controlled here
     crossover:str='order1x'  # normal crossover will break the ordering so use this to pick a point 
                             # works by selecting points in par one take those 2 
                             # then take remainder of other parent nor present and place in the child
     
-    elitism: int=5 #keep the best 2 tours each generation (if wnat to exploint faster raise this)
+    elitism: int=2 #keep the best 2 tours each generation (if wnat to exploint faster raise this)
     mutationRate: float=0.20
     mutationType:str='swap' # swap units in the child around and see if it improves
 
