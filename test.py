@@ -1,6 +1,7 @@
 from TSPWorld import TspWorld
 from Baseline import nearestNeighbour,randomSerach,twoOpt
 from config import trailConfig,GAConfigs
+from Logger import Logger
 
 from GeneticAlgo import TSPGA
 tWorld=TspWorld(r'data\eil101.tsp',629)
@@ -26,16 +27,17 @@ prob=trailConfig()
 
 ga=GAConfigs()
 
+logs=Logger(tWorld,ga,1000,'GA')
 
 
+GA=TSPGA(tWorld,ga,17,logs)
 
-GA=TSPGA(tWorld,ga,17,None)
 
+logs.saveRecords('Records.json')
 
 
 bestTours,bestTourLen,hist=GA.run()
 
 
-print(bestTours)
+
 print(bestTourLen)
-print(hist)

@@ -56,3 +56,6 @@ class TspWorld:
 
 
         return np.array(length)
+
+    def differenceToBest(self,tourDistance):
+        return float(((tourDistance-self.optimal)/self.optimal)*100)

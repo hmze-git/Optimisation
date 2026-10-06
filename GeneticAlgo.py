@@ -75,7 +75,7 @@ class TSPGA:
                 history.append(bestTourLen) #keep track of the best lengths foudn each generation to observe if it eventually converges
 
             if self.logger is not None:
-                pass #logic for storing logs per gen
+                self.logger.record(gen,self.numEvals,population,tourDistances,bestTourLen,bestTour)
 
             if gen == self.config.generations-1:
                 break
@@ -83,7 +83,7 @@ class TSPGA:
 
             order=np.argsort(tourDistances) #shortest tours first and only the indices dont care about distances
 
-            newPop=None
+            newPop=[]
             #take top n and keep them to next gen
             for p in order[:self.config.elitism]:
                 newPop=[population[p].copy()]
@@ -96,4 +96,7 @@ class TSPGA:
             tourDistances=self.tspProblem.computePopLen(population)
             self.numEvals+=self.config.popSize-self.config.elitism
 
+        if gen%self.logger.logWhen==0:
+
+            self.logger.saveRecords('best.json')
         return bestTour,bestTourLen,history
