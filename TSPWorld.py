@@ -41,3 +41,18 @@ class TspWorld:
 
                 self.distanceMatrix[r][c]=distance
     
+    def computePopLen(self,population):
+        length=[]
+
+        for tour in population:
+            distance=0
+
+            for i in range(len(tour)):
+                currCity=tour[i]
+                nextCity=tour[(i+1)%len(tour)] #wrap around to first city logic included here
+
+                distance+=self.distanceMatrix[currCity][nextCity]
+            length.append(distance)
+
+
+        return np.array(length)
