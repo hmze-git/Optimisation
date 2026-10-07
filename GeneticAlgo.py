@@ -14,8 +14,6 @@ class TSPGA:
         self.operators=Operator(self.rng)
 
 
-        #logging
-        self.numEvals=0
         self.logger=logger
 
 
@@ -59,7 +57,6 @@ class TSPGA:
 
         tourDistances=self.tspProblem.computePopLen(population)
 
-        self.numEvals=len(population) # compute the tour distnace for every single candidate in the population at first
 
 
         bestTourLen=float('inf')
@@ -75,7 +72,7 @@ class TSPGA:
                 history.append(bestTourLen) #keep track of the best lengths foudn each generation to observe if it eventually converges
 
             if self.logger is not None:
-                self.logger.record(gen,self.numEvals,population,tourDistances,bestTourLen,bestTour)
+                self.logger.record(gen,population,tourDistances,bestTourLen,bestTour)
 
             if gen == self.config.generations-1:
                 break
@@ -94,7 +91,8 @@ class TSPGA:
 
             population=np.array(newPop)
             tourDistances=self.tspProblem.computePopLen(population)
-            self.numEvals+=self.config.popSize-self.config.elitism
+
+   
 
     
 

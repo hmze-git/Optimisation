@@ -85,3 +85,24 @@ def twoOpt(distanceMatrix,rng):
                     tour=newTour
                     improved=True
     return tour,computeDistance(tour,distanceMatrix)
+
+def nnTwoOpt(distanceMatrix,tour):
+    numCities=len(distanceMatrix)
+   
+
+    improved=True
+
+    while improved:
+        improved=False
+        for i in range(1,numCities-1):
+            for j in range(i+1,numCities):  
+
+                newTour=tour.copy()
+                # take the two points and reverse the arrangement between the two
+
+                newTour[i:j]=newTour[i:j][::-1] #step -1 means go backwards 
+
+                if computeDistance(newTour,distanceMatrix)<computeDistance(tour,distanceMatrix):
+                    tour=newTour
+                    improved=True
+    return tour,computeDistance(tour,distanceMatrix)

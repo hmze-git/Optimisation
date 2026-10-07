@@ -29,7 +29,7 @@ class Logger:
                 allEdges.append(edge)
 
         return allEdges
-    def record(self,gen,numEvals,population,distances,bestDistance,bestTour):
+    def record(self,gen,population,distances,bestDistance,bestTour):
 
         bestEdges = self.getEdges(bestTour)
 
@@ -55,8 +55,7 @@ class Logger:
 
         popSim=sum(similarityToBestVals)/len(similarityToBestVals)
         row = {
-            'gen': gen,
-            'numEvals': numEvals,                              
+            'gen': gen,                         
             'best': bestDistance,                            
             'diffPercent': self.problem.differenceToBest(bestDistance),           # how different is GA to best
             'tourMean': float(distances.mean()), # what is the mean distance

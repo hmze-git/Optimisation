@@ -24,10 +24,11 @@ def run():
         based2Opt=twoOpt(tWorld.distanceMatrix,rng)
 
         geneticTSP=TSPGA(tWorld,gaConf,seed,logger)
-
+        randTSP=RandomGen(tWorld,gaConf,seed,None)
         geneticTSP.run()
 
         results['ga'][str(seed)]=logger.getRows() # reset logger each iteration so this doesnt hold stae info
+        results['random'][str(seed)]=logger.getRows() # reset logger each iteration so this doesnt hold stae info
 
 
     with open('results.json','w') as f:
@@ -38,5 +39,9 @@ run()
 with open('results.json') as file:
     results = json.load(file)
 
-pltoSeeds(results['ga'], 'best', 'GA: best so far', 'ga_best.png')
-#         ^^^^^^^^^^^^^ this is `runs`
+    pltoSeeds(results['ga'], 'best', 'GA: Evolution Of Best Distance', 'GABest1.png')
+    pltoSeeds(results['ga'], 'tourMean', 'GA: Evolution Of Mean Distance', 'GAMean1.png')
+    pltoSeeds(results['ga'], 'tourStd', 'GA: Evolution Of Standard Deviation', 'GAStd1.png')
+    pltoSeeds(results['ga'], 'tourWorst', 'GA: Evolution Of Worst Distance', 'GAWorst1.png')
+    pltoSeeds(results['ga'], 'similarity', 'GA: Similarity in population', 'GASim1.png')
+

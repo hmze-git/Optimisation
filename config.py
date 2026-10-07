@@ -14,7 +14,7 @@ class GAConfigs:
     popSize: int=200 #how many different arrangements to check each time
     generations:int=10000
     tournamentSel: int=2 # take a groups of  5 tours select the best to be used for eveolution
-    crossOverRate: float=0.5 #explore vs exploit partially controlled here
+    crossOverRate: float=0.3 #explore vs exploit partially controlled here
     crossover:str='order1x'  # normal crossover will break the ordering so use this to pick a point 
                             # works by selecting points in par one take those 2 
                             # then take remainder of other parent nor present and place in the child
